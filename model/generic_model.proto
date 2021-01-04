@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package model_grpc_service;
+
+
+message empty {}
+
+message model {
+    string qualified_name = 1;
+    string display_name = 2;
+    string description = 3;
+    sint32 major_version = 4;
+    sint32 minor_version = 5;
+    string input_type = 6;
+    string output_type = 7;
+    string operation = 8;
+}
+
+message ack_modelupdate{
+        bool updated = 1;
+}
+
+message generic_msg_dataframe {
+	string  msg=1;
+}
+
+service GenericMLServices {
+
+    rpc ConfigureModelParameters(generic_msg_dataframe) returns (ack_modelupdate) {}
+    rpc TrainModel(generic_msg_dataframe) returns (generic_msg_dataframe) {}
+    rpc InferModel(generic_msg_dataframe) returns (generic_msg_dataframe) {}
+}
+
